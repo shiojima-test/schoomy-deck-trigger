@@ -1,0 +1,12 @@
+name: deck-sync
+on:
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: call hook
+        env:
+          HOOK_URL: ${{ secrets.DECK_HOOK_URL }}
+        run: |
+          curl -sL -m 300 -X POST -H "Content-Type: application/json" -d '{"action":"task","id":"deck_sync"}' "$HOOK_URL" | tail -c 3000
